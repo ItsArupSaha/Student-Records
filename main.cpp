@@ -54,15 +54,18 @@ void modify(){
     cout << "Enter roll: ";
     int roll; cin>>roll;
 
-    Node* previous = head;
     Node* current = head;
 
-    if(current->rollNo != roll){
-        previous = current;
+    while(current!=NULL && current->rollNo != roll){
         current = current->next;
     }
 
-    cout << "Enter name of student: " << endl;
+    if(current == NULL){
+        cout << "Record not found" << endl;
+        return;
+    }
+    else{
+        cout << "Enter name of student: " << endl;
     cin >> current->name;
     
     cout << "Enter disciplin of student" << endl;
@@ -75,6 +78,7 @@ void modify(){
     cin >> current->section;
 
     cout << endl << "Record Modified for roll: " << current->rollNo << endl;
+    } 
 }
 
 
@@ -83,25 +87,22 @@ void search(){
     cout << "Enter roll of student to search" << endl;
     int roll; cin >> roll;
 
-    Node* previous = head;
     Node* current = head;
 
-    bool found = false;
-
-    while(current->rollNo != roll){
-        found = true;
-        previous = current;
+    while(current!=NULL && current->rollNo != roll){
         current = current->next;
     }
 
-    if(!found)
-        cout << "No records found" << endl;
+    if(current == NULL){
+        cout << "Record not found" << endl;
         return;
-
-    cout << "Name: " << current->name << endl;
-    cout << "Roll: " << current->rollNo << endl;
-    cout << "Section: " << current->section << endl;
-    cout << "Disciplin: " << current->discipline << endl;
+    }
+    else{
+        cout << "Name: " << current->name << endl;
+        cout << "Roll: " << current->rollNo << endl;
+        cout << "Section: " << current->section << endl;
+        cout << "Disciplin: " << current->discipline << endl;
+    }
 }
 
 
@@ -110,21 +111,36 @@ void del(){
     cout << "Enter roll to delete records"<< endl;
     int roll; cin>>roll;
 
-    Node* previous = head;
     Node* current = head;
+    Node* previous = head;
 
-    while(current->rollNo != roll){
-        previous = current;
+    while(current!=NULL && current->rollNo != roll){
         current = current->next;
     }
 
-    previous->next = current->next;
-    current->next = NULL;
+    if(current == NULL){
+        cout << "Record not found" << endl;
+        return;
+    }
+    else{
+        previous->next = current->next;
+        current->next = NULL;
+    }
+        
 
     cout << endl << "Record deleted of roll: "<< current->rollNo << endl;
-    delete current;
 }
 
+
+//freeup the lists before exit
+void freeList(){
+    while(head != NULL){
+        Node* temp = head->next;
+        delete head;
+        head = temp;
+    }
+
+}
 
 int main(){
     char x; 
@@ -155,6 +171,7 @@ int main(){
             del();
             break;
         case '5':
+
             exit(0);
             break;
         default:
