@@ -114,19 +114,20 @@ void del(){
     Node* current = head;
     Node* previous = head;
 
-    if(current->rollNo == roll){
-        Node* temp = head;
-        delete head;
-        head = temp->next;
-        return;
-    }
-
     while(current!=NULL && current->rollNo != roll){
+        previous = current;
         current = current->next;
     }
 
     if(current == NULL){
         cout << "Record not found" << endl;
+        return;
+    }
+
+    if(current->rollNo == roll){
+        Node* temp = head;
+        delete head;
+        head = temp->next;
         return;
     }
     else{
