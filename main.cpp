@@ -114,6 +114,13 @@ void del(){
     Node* current = head;
     Node* previous = head;
 
+    if(current->rollNo == roll){
+        Node* temp = head;
+        delete head;
+        head = temp->next;
+        return;
+    }
+
     while(current!=NULL && current->rollNo != roll){
         current = current->next;
     }
@@ -129,6 +136,8 @@ void del(){
         
 
     cout << endl << "Record deleted of roll: "<< current->rollNo << endl;
+    
+    delete current;
 }
 
 
